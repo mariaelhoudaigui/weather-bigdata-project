@@ -9,8 +9,7 @@ services:
 
   kafka:
     image: confluentinc/cp-kafka:7.4.0
-    depends_on:
-      - zookeeper
+    depends_on: [zookeeper]
     ports:
       - "9092:9092"
     environment:
@@ -26,5 +25,60 @@ services:
       NIFI_WEB_HTTP_PORT: 8080
     volumes:
       - nifi_conf:/opt/nifi/nifi-current/conf
+
+  kafka-connect:
+    image: confluentinc/cp-kafka-connect:7.4.0
+    depends_on:
+      - kafka
+    ports:
+      - "8083:8083"
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: kafka:9092
+      CONNECT_REST_PORT: 8083
+      CONNECT_GROUP_ID: "connect-cluster"
+      AWS_ACCESS_KEY_ID: admin
+      AWS_SECRET_ACCESS_KEY: minioadmin
+      CONNECT_REST_ADVERTISED_HOST_NAME: kafka-connect
+      CONNECT_CONFIG_STORAGE_TOPIC: connect-configs
+      CONNECT_OFFSET_STORAGE_TOPIC: connect-offsets
+      CONNECT_STATUS_STORAGE_TOPIC: connect-status
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
+      CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
+      CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_PLUGIN_PATH: /etc/kafka-connect/plugins
+
+    volumes:
+      - ./plugins:/etc/kafka-connect/plugins
+
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"      # Console MinIO
+      - "9001:9001"      # UI MinIO
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - minio-data:/data
+    command: server /data --console-address ":9001"
+
+  spark:
+    image: apache/spark:3.5.0
+    depends_on:
+      - kafka
+      - minio
+    ports:
+      - "4040:4040" # Spark UI
+    environment:
+      - SPARK_MODE=master
+    volumes:
+      - ./spark-apps:/opt/spark-apps   # Pour tes scripts Spark (ex: weather_spark_streaming.py)
+      - ./spark-output:/opt/spark-output  # Sorties JSON/Parquet
+    command: bash -c "sleep infinity"  
 volumes:
+  minio-data:    
   nifi_conf:
