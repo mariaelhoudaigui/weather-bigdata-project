@@ -40,7 +40,7 @@ weather_stream = spark \
     .readStream \
     .format("kafka") \
     .option("kafka.bootstrap.servers", "kafka:9092") \
-    .option("subscribe", "weather-raw-data") \
+    .option("subscribe", "weather-data") \
     .option("startingOffsets", "latest") \
     .load()
 

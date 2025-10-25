@@ -78,7 +78,7 @@ services:
     environment:
       - SPARK_MODE=master
     volumes:
-      - ./spark-apps:/opt/spark-apps   
+      - ./spark-apps:/opt/spark/work-dir
       - ./spark-output:/opt/spark-output 
     command: bash -c "sleep infinity"  
 volumes:
