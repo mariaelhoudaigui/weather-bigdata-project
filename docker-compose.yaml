@@ -67,17 +67,19 @@ services:
     command: server /data --console-address ":9001"
 
   spark:
-    image: apache/spark:3.5.0
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
     depends_on:
       - kafka
       - minio
     ports:
-      - "4040:4040" # Spark UI
+      - "4040:4040" 
     environment:
       - SPARK_MODE=master
     volumes:
-      - ./spark-apps:/opt/spark-apps   # Pour tes scripts Spark (ex: weather_spark_streaming.py)
-      - ./spark-output:/opt/spark-output  # Sorties JSON/Parquet
+      - ./spark-apps:/opt/spark-apps   
+      - ./spark-output:/opt/spark-output 
     command: bash -c "sleep infinity"  
 volumes:
   minio-data:    
