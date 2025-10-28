@@ -51,8 +51,8 @@ weather_df = weather_stream \
     .select(from_json(col("value").cast("string"), weather_schema).alias("data")) \
     .select("data.*") \
     .withColumn("temperature", round(col("température").cast("double")).cast("integer")) \
-    .withColumn("humidity", col("humidité").cast("double")) \
-    .withColumn("pressure", col("pression").cast("double")) \
+    .withColumn("humidity", col("humidité").cast("double").cast("integer")) \
+    .withColumn("pressure", col("pression").cast("double").cast("integer")) \
     .withColumn("wind_speed_num", col("wind_speed").cast("double")) \
     .withColumn("feels_like_num", round(col("feels_like").cast("double")).cast("integer")) \
     .withColumn("min_temp_num", round(col("min_temp").cast("double")).cast("integer")) \
@@ -62,7 +62,7 @@ weather_df = weather_stream \
     .withColumn("event_time", from_unixtime(col("timestamp").cast("long"))) \
     .withColumn("timestamp_dt", to_timestamp(col("event_time"))) \
     .drop("température", "humidité", "pression", "feels_like", "min_temp", "max_temp", 
-          "latitude", "longitude", "wind_speed")  # Supprime les colonnes string dupliquées
+          "latitude", "longitude", "wind_speed") 
 
 # ============================================
 # ENRICHISSEMENT DES DONNÉES
@@ -194,10 +194,10 @@ query_alerts = alerts_stream \
 # ATTENDRE LA FIN DES STREAMS
 # ============================================
 print("=" * 60)
-print("✅ Spark Streaming Started Successfully!")
+print("Spark Streaming Started Successfully!")
 print("=" * 60)
-print(f"📊 Processing weather data for Casablanca")
-print(f"📁 Output locations:")
+print(f"Processing weather data for Casablanca")
+print(f"Output locations:")
 print(f"   - Enriched data: /tmp/weather_enriched")
 print(f"   - Statistics: /tmp/weather_stats")
 print(f"   - Alerts: /tmp/weather_alerts")
