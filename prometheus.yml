@@ -1,24 +1,25 @@
 global:
-  scrape_interval: 10s  # fréquence de collecte (toutes les 10 secondes)
+  scrape_interval: 10s
 
 scrape_configs:
-  # --- Kafka ---
   - job_name: 'kafka'
     static_configs:
-    - targets: ['bigdataproject-kafka-1:7071']
+      - targets: ['bigdataproject-kafka-1:7071']
 
-  # --- NiFi ---
   - job_name: 'nifi'
-    metrics_path: /nifi-api/metrics
+    metrics_path: /metrics
     static_configs:
-      - targets: ['bigdataproject-nifi-1:8080']
+      - targets: ['bigdataproject-nifi-1:9091']
+    honor_labels: true
+    scrape_timeout: 10s
+    scheme: http
+    params:
+      format: ["prometheus"]
 
-  # --- Spark ---
   - job_name: 'spark'
     static_configs:
-      - targets: ['bigdataproject-spark-1:4040']
+      - targets: ['bigdataproject-spark-1:4041']
 
-  # --- MinIO ---
   - job_name: 'minio'
     metrics_path: /minio/v2/metrics/cluster
     static_configs:
