@@ -1,0 +1,25 @@
+global:
+  scrape_interval: 10s
+
+scrape_configs:
+  - job_name: 'kafka'
+    static_configs:
+      - targets: ['bigdataproject-kafka-1:7071']
+
+  - job_name: 'nifi'
+    static_configs:
+      - targets: ['bigdataproject-nifi-1:9091']
+
+
+  - job_name: 'minio'
+    metrics_path: /minio/v2/metrics/cluster
+    static_configs:
+      - targets: ['bigdataproject-minio-1:9000']
+
+  # --- Spark ---
+  - job_name: 'spark'
+    metrics_path: /metrics/prometheus
+    static_configs:
+      - targets: ['spark:4041']
+
+

@@ -8,8 +8,18 @@ import math
 # ============================================
 spark = SparkSession.builder \
     .appName("CasablancaWeatherStreamProcessing") \
-    .config("spark.jars.packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0") \
+    .config("spark.jars.packages",
+            "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0,"
+            "org.apache.hadoop:hadoop-aws:3.3.4,"
+            "com.amazonaws:aws-java-sdk-bundle:1.12.262") \
+    .config("spark.hadoop.fs.s3a.endpoint", "http://minio:9000") \
+    .config("spark.hadoop.fs.s3a.access.key", "admin") \
+    .config("spark.hadoop.fs.s3a.secret.key", "minioadmin") \
+    .config("spark.hadoop.fs.s3a.path.style.access", "true") \
+    .config("spark.hadoop.fs.s3a.connection.ssl.enabled", "false") \
+    .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
     .getOrCreate()
+
 
 spark.sparkContext.setLogLevel("WARN")
 
@@ -164,8 +174,9 @@ query_json = enriched_weather \
     .writeStream \
     .outputMode("append") \
     .format("json") \
-    .option("path", "/opt/spark-output/weather_enriched") \
-    .option("checkpointLocation", "/opt/spark-output/checkpoint_enriched") \
+    .option("path", "s3a://weather-spark-output/weather_enriched/") \
+    .option("checkpointLocation", "s3a://weather-spark-output/enriched/") \
+    .option("pretty", "true") \
     .start()
 
 
@@ -187,8 +198,9 @@ query_alerts = alerts_stream \
     .writeStream \
     .outputMode("append") \
     .format("json") \
-    .option("path", "/opt/spark-output/weather_alerts") \
-    .option("checkpointLocation", "/opt/spark-output/checkpoint_alerts") \
+    .option("path", "s3a://weather-spark-output/weather_alerts/") \
+    .option("checkpointLocation", "s3a://weather-spark-output/checkpoint_alerts/") \
+    .option("pretty", "true") \
     .start()
 
 
@@ -199,10 +211,9 @@ print("=" * 60)
 print("Spark Streaming Started Successfully!")
 print("=" * 60)
 print(f"Processing weather data for Casablanca")
-print(f"Output locations:")
-print(f"   - Enriched data: /opt/spark-output/weather_enriched")
-print(f"   - Statistics: /opt/spark-output/weather_stats")
-print(f"   - Alerts: /opt/spark-output/weather_alerts")
+print("Output locations (MinIO buckets):")
+print("   - Enriched data: s3a://weather-output/weather_enriched/")
+print("   - Alerts: s3a://weather-output/weather_alerts/")
 print("=" * 60)
 
 spark.streams.awaitAnyTermination() 

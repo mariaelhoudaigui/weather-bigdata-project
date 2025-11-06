@@ -1,0 +1,11 @@
+v1
+{"path":"file:///opt/spark-output/weather_alerts/part-00000-315e9486-561d-417c-bd40-4d9e8125aa64-c000.json","size":0,"isDir":false,"modificationTime":1761661606640,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///opt/spark-output/weather_alerts/part-00000-7df4249f-90e8-4616-9ec6-abccc3e5b35d-c000.json","size":0,"isDir":false,"modificationTime":1761661628945,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///opt/spark-output/weather_alerts/part-00000-bc40825c-84c2-473d-847b-20fe0f4744e9-c000.json","size":0,"isDir":false,"modificationTime":1761661659301,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///opt/spark-output/weather_alerts/part-00000-c9dc5f5b-c08f-4db9-8eb8-245e6f692178-c000.json","size":0,"isDir":false,"modificationTime":1761662093360,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///opt/spark-output/weather_alerts/part-00000-130f832c-7dcc-4511-ba62-2635c4b2f8ed-c000.json","size":0,"isDir":false,"modificationTime":1761662111203,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///opt/spark-output/weather_alerts/part-00000-0f44c516-3cac-467e-9d0a-d95cb5fc753b-c000.json","size":0,"isDir":false,"modificationTime":1761662141150,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///opt/spark-output/weather_alerts/part-00000-7ae76823-1948-45fa-bab9-13a7c07dbf6d-c000.json","size":0,"isDir":false,"modificationTime":1761662171388,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///opt/spark-output/weather_alerts/part-00000-004ccd1c-b32f-4d6b-8c2b-1f5e53f12054-c000.json","size":0,"isDir":false,"modificationTime":1761662202006,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///opt/spark-output/weather_alerts/part-00000-9cd59f61-557f-46b6-aa41-f5e6e814a71b-c000.json","size":0,"isDir":false,"modificationTime":1761662232521,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///opt/spark-output/weather_alerts/part-00000-017c91c3-0132-4259-a517-278753bbf741-c000.json","size":0,"isDir":false,"modificationTime":1761662380996,"blockReplication":1,"blockSize":33554432,"action":"add"}

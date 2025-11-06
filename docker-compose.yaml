@@ -9,22 +9,35 @@ services:
 
   kafka:
     image: confluentinc/cp-kafka:7.4.0
-    depends_on: [zookeeper]
+    depends_on:
+      - zookeeper
     ports:
-      - "9092:9092"
+      - "9092:9092"   # Kafka
+      - "9101:9101"
+      - "7071:7071"   # Prometheus agent
     environment:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-
+      KAFKA_JMX_PORT: 9101
+      KAFKA_JMX_HOSTNAME: kafka
+      KAFKA_OPTS: "-javaagent:/etc/jmx/jmx_prometheus_javaagent-1.5.0.jar=7071:/etc/jmx/kafka-jmx-config.yml"
+    volumes:
+      - ./monitoring:/etc/jmx
   nifi:
     image: apache/nifi:1.27.0
     ports:
       - "9090:8080"
+      - "9091:9091"   # port Prometheus
     environment:
       NIFI_WEB_HTTP_PORT: 8080
+      NIFI_JMX_PORT: 9999
+      NIFI_JVM_OPTS: >
+        -javaagent:/etc/jmx/jmx_prometheus_javaagent-0.20.0.jar=9091:/etc/jmx/nifi-jmx-config.yml
+        -Xms1g -Xmx1g
     volumes:
       - nifi_conf:/opt/nifi/nifi-current/conf
+      - ./monitoring:/etc/jmx
 
   kafka-connect:
     image: confluentinc/cp-kafka-connect:7.4.0
@@ -62,6 +75,7 @@ services:
     environment:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_PROMETHEUS_AUTH_TYPE: public
     volumes:
       - minio-data:/data
     command: server /data --console-address ":9001"
@@ -75,12 +89,41 @@ services:
     ports:
       - "7077:7077"   # Spark master
       - "8081:8081"   # Spark web UI
+      - "4041:4041"
     environment:
       - SPARK_MODE=master
+      - SPARK_MASTER_HOST=spark
+      - SPARK_DAEMON_JAVA_OPTS=-javaagent:/etc/jmx/jmx_prometheus_javaagent-1.5.0.jar=4041:/etc/jmx/spark-jmx-config.yml
     volumes:
       - ./spark-apps:/opt/spark/work-dir
       - ./spark-output:/opt/spark-output
-    command: sleep infinity
+      - ./monitoring:/etc/jmx
+    command: bash -c "/opt/spark/sbin/start-master.sh && sleep infinity"
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    depends_on:
+      - kafka
+      - nifi
+      - minio
+      - spark
+    ports:
+      - "3030:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
 volumes:
   minio-data:    
   nifi_conf:

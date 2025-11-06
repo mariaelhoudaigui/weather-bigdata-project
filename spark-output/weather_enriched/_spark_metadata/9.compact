@@ -1,0 +1,11 @@
+v1
+{"path":"file:///opt/spark-output/weather_enriched/part-00000-2ff97cad-733e-4f9c-9cb5-3dcf90e220f9-c000.json","size":0,"isDir":false,"modificationTime":1761661606643,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///opt/spark-output/weather_enriched/part-00000-70da0e26-19f5-474a-aa00-6a20de30ad2c-c000.json","size":371,"isDir":false,"modificationTime":1761661629902,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///opt/spark-output/weather_enriched/part-00000-bbef179a-53d4-458e-86c0-8fbf8498e2bd-c000.json","size":371,"isDir":false,"modificationTime":1761661659856,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///opt/spark-output/weather_enriched/part-00000-ca876385-f402-4cf3-b359-f5c57d3904fb-c000.json","size":4886,"isDir":false,"modificationTime":1761662094614,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///opt/spark-output/weather_enriched/part-00000-18b65147-a25e-4f9b-b173-5216dd0da12a-c000.json","size":349,"isDir":false,"modificationTime":1761662111683,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///opt/spark-output/weather_enriched/part-00000-f83cad23-50e8-4d3c-b523-457a46c3c4a8-c000.json","size":349,"isDir":false,"modificationTime":1761662141640,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///opt/spark-output/weather_enriched/part-00000-4fd82c70-37aa-4628-9449-53b8bb08d160-c000.json","size":349,"isDir":false,"modificationTime":1761662171946,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///opt/spark-output/weather_enriched/part-00000-3562f066-1d2b-49fa-8e09-9705adf28e65-c000.json","size":349,"isDir":false,"modificationTime":1761662202486,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///opt/spark-output/weather_enriched/part-00000-a684c483-0c69-4bb2-a6fd-74062f48e45d-c000.json","size":349,"isDir":false,"modificationTime":1761662232991,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///opt/spark-output/weather_enriched/part-00000-53d1c584-ea2b-49bd-aaac-155806d6f0d2-c000.json","size":1372,"isDir":false,"modificationTime":1761662382522,"blockReplication":1,"blockSize":33554432,"action":"add"}

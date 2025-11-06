@@ -7,6 +7,8 @@ RUN apt-get update && apt-get install -y python3 python3-pip
 # Installer PySpark (et kafka lib pour streaming)
 RUN pip3 install pyspark==3.5.0 kafka-python
 
+ENV SPARK_METRICS_CONF /opt/spark/conf/metrics.properties
+
 # Revenir à l'utilisateur spark
 USER spark
 
