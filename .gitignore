@@ -1,0 +1,16 @@
+# Logs Airflow
+airflow/logs/
+airflow/unittests.db
+
+# Fichiers temporaires Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# Environnement virtuel
+.venv/
+
+# Docker
+*.env
