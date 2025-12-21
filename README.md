@@ -13,7 +13,7 @@ The entire system is **fully containerized using Docker**.
 
 ![Architecture Diagram](projetimgdata1.png)
 
-## 🧰 Technologies Used
+## Technologies Used
 
 * Apache NiFi
 * Apache Kafka
@@ -92,7 +92,7 @@ docker ps
 ---
 
 
-## 📊 Monitoring
+## Monitoring
 
 * **Prometheus** collects metrics from:
 
