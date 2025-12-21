@@ -11,7 +11,7 @@ The entire system is **fully containerized using Docker**.
 
 ##  Architecture
 
-![Architecture Diagram](arcitectureimage/architecture.png)
+![Architecture Diagram](projetimgdata1.png)
 
 ## 🧰 Technologies Used
 
