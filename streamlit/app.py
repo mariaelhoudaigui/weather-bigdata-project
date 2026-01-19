@@ -325,11 +325,10 @@ if has_temp:
             fig3.update_layout(showlegend=False)
             fig3.update_xaxes(tickangle=-45)
             st.plotly_chart(fig3, use_container_width=True)
-
-# GRAPHIQUE 3: Statistiques par ville
+# GRAPHIQUE 3: Statistiques par ville (TABLEAU UNIQUEMENT)
 if has_temp and has_city:
     st.markdown("---")
-    st.markdown("### 📊 Statistiques ")
+    st.markdown("### 📊 Statistiques par ville")
     
     city_stats = df.groupby('city_name')['temperature'].agg([
         ('Moyenne', 'mean'),
@@ -338,23 +337,9 @@ if has_temp and has_city:
         ('Écart-type', 'std')
     ]).round(2)
     
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.dataframe(city_stats, use_container_width=True)
-    
-    with col2:
-        fig4 = px.bar(
-            city_stats.reset_index(),
-            x='city_name',
-            y='Moyenne',
-            title="Température moyenne par ville",
-            labels={'city_name': 'Ville', 'Moyenne': 'Temp. Moyenne (°C)'},
-            color='Moyenne',
-            color_continuous_scale='RdYlBu_r'
-        )
-        fig4.update_xaxes(tickangle=-45)
-        st.plotly_chart(fig4, use_container_width=True)
+    # Affichage du tableau uniquement
+    st.dataframe(city_stats, use_container_width=True)
+
 
 # =================================================
 # ALERTES MÉTÉO
